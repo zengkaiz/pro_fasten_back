@@ -3,8 +3,14 @@
  * @type {Object}
  */
 let mutations = {
-  setUserInfo(state, userInfo) {
-    state.userInfo = userInfo
+  setUserName(state, userName) {
+    state.userName = userName
+  },
+  setConfLists(state, confLists) {
+    state.confLists = confLists
+  },
+  setIsloginPage(state, bul) {
+    state.isLoginPage = bul
   }
 }
 

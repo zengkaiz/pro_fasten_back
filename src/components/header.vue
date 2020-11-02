@@ -9,17 +9,17 @@
         <div class="header-title-wrap">
           <div class="header-title" @click="toIndex">图文中国.com</div>
         </div>
-        <div class="user" v-if="username">
+        <div class="user" v-if="userName">
           <el-dropdown @command="logout" trigger="click">
             <div class="info">
               <div>
                 <i class="el-icon-s-custom"></i>
-                {{username}}
+                {{userName}}
                 <i class="el-icon-caret-bottom"></i>
               </div>
             </div>
             <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item>注销</el-dropdown-item>
+              <el-dropdown-item>退出登录</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
         </div>
@@ -38,8 +38,8 @@ export default {
   },
   computed: {
     ...mapState(['']),
-    username() {
-      return this.$store.state.username
+    userName() {
+      return this.$store.state.userName
     }
   },
   watch: {},
@@ -55,6 +55,7 @@ export default {
         .logout()
         .then(() => {
           this.$message.success('登出成功')
+          this.$store.state.userName = ''
           this.$router.push('/login')
         })
         .catch((err) => {
@@ -66,7 +67,11 @@ export default {
   components: {}
 }
 </script>
-
+<style lang="scss">
+/deep/.el-dropdown-menu__item {
+  padding: 10px 20px !important;
+}
+</style>
 <style lang="scss" scoped>
 @import '~@assets/css/common.scss';
 .g-header-layout {

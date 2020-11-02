@@ -26,7 +26,7 @@ class Fetch {
    * @param  {int} [timeout=10000}] [过时时间]
    * @return {Promise}
    */
-  post(url, { data, params, headers = { 'content-type': 'application/x-www-form-urlencoded' }, withCredentials = false, timeout = 10000 } = {}) {
+  post(url, { data, params, headers = { 'content-type': 'multipart/form-data' }, withCredentials = false, timeout = 20000 } = {}) {
     return this.http({ url, method: 'post', data, params, headers, withCredentials, timeout })
   }
   /**
@@ -39,7 +39,7 @@ class Fetch {
    * @param  {int} [timeout=10000}] [过时时间]
    * @return {Promise}
    */
-  get(url, { data, params, headers, withCredentials = false, timeout = 10000 } = {}) {
+  get(url, { data, params, headers, withCredentials = false, timeout = 20000 } = {}) {
     return this.http({ url, method: 'get', data, params, headers, withCredentials, timeout })
   }
   sendBeacon(url, data) {

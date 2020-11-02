@@ -1,3 +1,5 @@
 module.exports = {
-  api: 'http://api.profasten.guojiacheng.dev.jiach18.cn'
+  // api: 'http://abc.guojiacheng.dev.tuwenzhongguo.com/',
+  api: 'http://abc.demo.tuwenzhongguo.com',
+  uploadurl: 'http://abc.dev.jiach18.cn'
 }

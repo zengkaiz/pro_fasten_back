@@ -1,4 +1,3 @@
-import { setCookie } from '@/utils/cookie.js'
 import api from '@/apiFetch/api'
 import md5 from 'js-md5'
 
@@ -10,14 +9,32 @@ var actions = {
       api
         .login(loginForm)
         .then((data) => {
-          const userInfo = {
-            uid: data.id,
-            userName: data.nickName
-          }
-          setCookie('uid', data.id)
-          setCookie('userInfo', userInfo)
-          state.userInfo = data.userInfo
+          localStorage.userName = data.userName
           resolve(data)
+        })
+        .catch((err) => {
+          reject(err)
+        })
+    })
+  },
+  getUserInfo() {
+    return new Promise((resolve, reject) => {
+      api
+        .getUserInfo()
+        .then((res) => {
+          resolve(res)
+        })
+        .catch((err) => {
+          reject(err)
+        })
+    })
+  },
+  getConfLists() {
+    return new Promise((resolve, reject) => {
+      api
+        .getConfLists()
+        .then((res) => {
+          resolve(res)
         })
         .catch((err) => {
           reject(err)

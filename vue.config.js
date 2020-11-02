@@ -1,5 +1,7 @@
 const webpack = require('webpack')
 const path = require('path')
+const CompressionWebpackPlugin = require('compression-webpack-plugin')
+const productionGzipExtensions = ['js', 'css']
 const resolve = (file) => path.resolve(__dirname, file)
 let env = {}
 if (process.env.NODE_DEPLOY !== 'production') {
@@ -7,6 +9,7 @@ if (process.env.NODE_DEPLOY !== 'production') {
 }
 
 module.exports = {
+  productionSourceMap: false,
   devServer: {
     disableHostCheck: true,
     proxy: env.proxy
@@ -15,6 +18,12 @@ module.exports = {
     plugins: [
       new webpack.DefinePlugin({
         'process.host': getDeployConfigDefine()
+      }),
+      new CompressionWebpackPlugin({
+        algorithm: 'gzip',
+        test: new RegExp('\\.(' + productionGzipExtensions.join('|') + ')$'),
+        threshold: 10240,
+        minRatio: 0.8
       })
     ]
   }),
@@ -30,7 +39,7 @@ module.exports = {
 function getDeployConfigDefine() {
   let config = {}
   Object.keys(env).forEach(function(key) {
-    config[key] = `'${env[key].api}'`
+    config[key] = `${JSON.stringify(env[key])}`
   })
   return config
 }

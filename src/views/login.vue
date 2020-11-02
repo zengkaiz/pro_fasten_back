@@ -6,14 +6,14 @@
   <div class="login-container">
     <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
       <div class="title-container">
-        <h3 class="title">欢迎登录</h3>
+        <h3 class="title">系统登录</h3>
       </div>
       <el-form-item prop="userName">
-        <span class="iconfont icon-user"></span>
-        <el-input ref="userName" v-model="loginForm.userName" placeholder="手机号" type="text" tabindex="1" auto-complete="on" />
+        <span class="iconfont el-icon-user"></span>
+        <el-input ref="userName" v-model="loginForm.userName" placeholder="用户名" type="text" tabindex="1" auto-complete="on" />
       </el-form-item>
       <el-form-item prop="password">
-        <span class="iconfont icon-denglumima"></span>
+        <span class="iconfont el-icon-lock"></span>
         <el-input
           :key="passwordType"
           ref="password"
@@ -26,14 +26,12 @@
           @keyup.enter.native="handleLogin"
         />
       </el-form-item>
-      <el-button :loading="loading" type="info" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">登录</el-button>
+      <el-button :loading="loading" type="primary" style="width:100%;" @click.native.prevent="handleLogin">登录</el-button>
     </el-form>
   </div>
 </template>
 
 <script>
-// import api from '../apiFetch/api'
-import { mapMutations, mapState } from 'vuex'
 export default {
   name: 'Login',
   data() {
@@ -61,20 +59,18 @@ export default {
       otherQuery: {}
     }
   },
-  computed: {
-    ...mapState(['userInfo'])
-  },
   created() {},
   mounted() {},
   destroyed() {},
   methods: {
-    ...mapMutations(['setUserInfo']),
     loginRequest() {
       const { userName, password } = this.loginForm
       this.$store
         .dispatch('init', { userName, password })
         .then(() => {
-          this.$router.push({ name: 'home' })
+          // this.$router.push({ path: '/' })
+          let routeData = this.$router.resolve({ name: 'order' })
+          window.open(routeData.href, '_self')
         })
         .catch((error) => {
           this.$message.error(error.errorMsg)
@@ -138,29 +134,6 @@ $cursor: #fff;
     background: rgba(0, 0, 0, 0.1);
     border-radius: 5px;
     color: #454545;
-  }
-  .el-radio-group {
-    width: 100%;
-    margin-bottom: 20px;
-    .el-radio-button {
-      width: 50%;
-      .el-radio-button__inner {
-        width: 100%;
-        background-color: #3d444e;
-        border-color: #3d444e;
-        &:hover {
-          color: #606266;
-        }
-      }
-      .el-radio-button__orig-radio:checked + .el-radio-button__inner {
-        background-color: #2b3036;
-        border-color: #2b3036;
-        box-shadow: none;
-        &:hover {
-          color: #ffffff;
-        }
-      }
-    }
   }
 }
 </style>
